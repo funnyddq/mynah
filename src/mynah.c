@@ -49,12 +49,16 @@ parse_command_line(int argc, char * argv[])
 		switch (ret)
 		{
 		case 'h':
+			if (argc != 2)
+				return 1;
 			show_help();
-			break;
+			return 0;
 
 		case 'v':
+			if (argc != 2)
+				return 1;
 			show_version();
-			break;
+			return 0;
 
 		case 'o':
 			is_output_set = 1;
@@ -66,12 +70,11 @@ parse_command_line(int argc, char * argv[])
 		}
 	}
 
-//	if (optind >= argc)
-//		return 1;
+	if (optind != argc - 1)
+		return 1;
 
-//	ret = parse_file(argv[optind++]);
-//	return ret;
-	return 0;
+	ret = parse_file(argv[optind], arg_output);
+	return ret;
 }
 
 void
