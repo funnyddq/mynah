@@ -2,9 +2,13 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "common.h"
 #include "parse.h"
+#include "line.h"
 
-int parse_file(char *input, char *output)
+int
+parse_file(const char *input, const char *output)
 {
 	FILE *fileInput, *fileOutput = NULL;
 	char *line = NULL;
@@ -28,7 +32,7 @@ int parse_file(char *input, char *output)
 	while (1)
 	{
 		read = getline(&line, &size, fileInput);
-		if (read == -1)
+		if (read == -1 || read == 0)
 		{
 			free(line);
 			if (fileOutput != NULL)
@@ -37,20 +41,8 @@ int parse_file(char *input, char *output)
 			return 0;
 		}
 
-		if (size > 0)
-		{
-			if (*(line + read - 1) != '\n')
-				print_message(fileOutput, line);
-			else
-			{
-				if (size >= 2)
-				{
-					if (*(line + read - 2) == '\\')
-						*(line + read - 2) = 0;
-					print_message(fileOutput, line);
-				}
-			}
-		}
+		delete_line_delimeter(line, (unsigned int) read);
+		print_message(fileOutput, line, LINE_DELIMETER);
 	}
 	free(line);
 	if (fileOutput != NULL)
@@ -59,15 +51,27 @@ int parse_file(char *input, char *output)
 	return 0;
 }
 
-void print_message(FILE *file, char *message)
+void
+print_message(FILE *file, const char *message, const char *delimeter)
 {
 	if (message == NULL)
 		return;
 
-	if (file == NULL)
-		printf("%s", message);
+	if (delimeter == NULL)
+	{
+		if (file == NULL)
+			printf("%s", message);
+		else
+			fprintf(file, "%s", message);
+	}
 	else
-		fprintf(file, "%s", message);
+	{
+		if (file == NULL)
+			printf("%s%s", message, delimeter);
+		else
+			fprintf(file, "%s%s", message, delimeter);
+
+	}
 
 	return;
 }

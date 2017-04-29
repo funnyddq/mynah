@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "common.h"
 #include "mynah.h"
 #include "parse.h"
 
