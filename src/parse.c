@@ -7,6 +7,7 @@
 #include "parse.h"
 #include "line.h"
 
+
 int
 parse_file(const char *input, const char *output)
 {
@@ -41,7 +42,7 @@ parse_file(const char *input, const char *output)
 			return 0;
 		}
 
-		delete_line_delimeter(line, (unsigned int) read);
+		delete_line_delimeter(line);
 		print_message(fileOutput, line, LINE_DELIMETER);
 	}
 	free(line);
@@ -52,25 +53,36 @@ parse_file(const char *input, const char *output)
 }
 
 void
-print_message(FILE *file, const char *message, const char *delimeter)
+print_message(FILE *file, char *message, const char *delimeter)
 {
-	if (message == NULL)
+	size_t size;
+
+	if (message == NULL || delimeter == NULL)
 		return;
 
-	if (delimeter == NULL)
+	size = strlen(message);
+	if (size == 0 || strlen(delimeter) == 0)
+		return;
+
+	if (file == NULL)
 	{
-		if (file == NULL)
+		if (*(message + size - 1) == '\\')
+		{
+			*(message + size - 1) = 0;
 			printf("%s", message);
+		}
 		else
-			fprintf(file, "%s", message);
+			printf("%s%s", message, delimeter);
 	}
 	else
 	{
-		if (file == NULL)
-			printf("%s%s", message, delimeter);
+		if (*(message + size - 1) == '\\')
+		{
+			*(message + size - 1) = 0;
+			fprintf(file, "%s", message);
+		}
 		else
 			fprintf(file, "%s%s", message, delimeter);
-
 	}
 
 	return;

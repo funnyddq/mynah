@@ -1,9 +1,19 @@
+#include <config.h>
+#include <stdlib.h>
+#include <string.h>
+#include "common.h"
 #include "line.h"
 
 void
-delete_line_delimeter(char *line, const unsigned int size)
+delete_line_delimeter(char *line)
 {
-	if (line == null || size == 0)
+	size_t size;
+
+	if (line == NULL)
+		return;
+
+	size = strlen(line);
+	if (size == 0)
 		return;
 
 	if (size == 1)
@@ -13,7 +23,7 @@ delete_line_delimeter(char *line, const unsigned int size)
 		return;
 	}
 	if (*(line + size - 2) == '\r' && *(line + size - 1) =='\n')
-		*(line + size - 2) == 0;
+		*(line + size - 2) = 0;
 	else if (*(line + size - 1) == '\n' || *(line + size - 1) =='\r')
 		*(line + size - 1) = 0;
 

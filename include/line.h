@@ -1,6 +1,6 @@
-#ifndef LINEXXXXXXXX_H
-#define LINEXXXXXXXX_H
+#ifndef LINE_H
+#define LINE_H
 
-void delete_line_delimeter(char *line, const unsigned int size);
+void delete_line_delimeter(char *line);
 
 #endif
