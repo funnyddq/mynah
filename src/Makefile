@@ -99,7 +99,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_mynah_OBJECTS = mynah.$(OBJEXT) parse.$(OBJEXT) line.$(OBJEXT)
+am_mynah_OBJECTS = mynah.$(OBJEXT) assemble.$(OBJEXT) parse.$(OBJEXT) \
+	line.$(OBJEXT)
 mynah_OBJECTS = $(am_mynah_OBJECTS)
 mynah_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
@@ -248,7 +249,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AM_CPPFLAGS = '-I$(srcdir)/../include'
-mynah_SOURCES = mynah.c parse.c line.c
+mynah_SOURCES = mynah.c assemble.c parse.c line.c
 all: all-am
 
 .SUFFIXES:
@@ -335,6 +336,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/assemble.Po
 include ./$(DEPDIR)/line.Po
 include ./$(DEPDIR)/mynah.Po
 include ./$(DEPDIR)/parse.Po
