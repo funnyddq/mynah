@@ -1,10 +1,9 @@
 #include <config.h>
-#include <stdlib>
+#include <stdlib.h>
 #include "common.h"
-#include "assemble.c"
 
 const char *
-size_name(cont int size)
+size_name(const int size)
 {
 	switch (size)
 	{
@@ -25,7 +24,7 @@ size_name(cont int size)
 	}
 }
 
-void out_imm8(int64_t offset, int32_t segment,
+/*void out_imm8(int64_t offset, int32_t segment,
 	struct operand *opx, int asize)
 {
     if (opx->segment != NO_SEG) {
@@ -35,4 +34,4 @@ void out_imm8(int64_t offset, int32_t segment,
         uint8_t byte = opx->offset;
         out(offset, segment, &byte, OUT_RAWDATA, 1, NO_SEG, NO_SEG);
     }
-}
+}*/
